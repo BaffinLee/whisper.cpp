@@ -4,13 +4,13 @@ ensure_command() {
   if ! command -v $1 > /dev/null 2>&1; then
     if command -v yum >/dev/null 2>&1; then
       yum update
-      yum install -y $1
+      yum install -y ${2:-$1}
     elif command -v apt-get >/dev/null 2>&1; then
       apt-get update
-      apt-get install -y $1
+      apt-get install -y ${2:-$1}
     elif command -v brew >/dev/null 2>&1; then
       brew update
-      brew install $1
+      brew install ${2:-$1}
     else
       echo "Please install $1 manually"
       exit 1
@@ -33,6 +33,7 @@ if ! [ -d "emsdk-master" ]; then
     ensure_command "wget"
     wget --quiet --show-progress -O master.tar.gz $url
   fi
+  ensure_command "xz" "xz-utils"
   tar -xvf master.tar.gz
   rm master.tar.gz
 fi
