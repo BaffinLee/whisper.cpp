@@ -15,7 +15,22 @@ ensure_command() {
   fi
 }
 
-ensure_command "cmake"
+# ensure_command "cmake"
+if ! command -v cmake > /dev/null 2>&1; then
+  url=https://github.com/Kitware/CMake/releases/download/v3.25.3/cmake-3.25.3-linux-x86_64.tar.gz
+  if command -v wget >/dev/null 2>&1; then
+    wget --quiet --show-progress -O cmake.tar.gz $url
+  elif command -v curl >/dev/null 2>&1; then
+    curl -L --output cmake.tar.gz $url
+  else
+    ensure_command "wget"
+    wget --quiet --show-progress -O cmake.tar.gz $url
+  fi
+  tar -xvf cmake.tar.gz -C cmake-source
+  rm cmake.tar.gz
+  PATH=`pwd`/cmake-source/bin:$PATH
+  echo $PATH
+fi
 
 mkdir -p build-em/
 cd build-em/
