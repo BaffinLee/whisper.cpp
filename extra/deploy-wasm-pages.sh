@@ -3,13 +3,10 @@
 ensure_command() {
   if ! command -v $1 > /dev/null 2>&1; then
     if command -v yum >/dev/null 2>&1; then
-      yum update
       yum install -y ${2:-$1}
     elif command -v apt-get >/dev/null 2>&1; then
-      apt-get update
       apt-get install -y ${2:-$1}
     elif command -v brew >/dev/null 2>&1; then
-      brew update
       brew install ${2:-$1}
     else
       echo "Please install $1 manually"
@@ -43,6 +40,15 @@ emsdk-master/emsdk install latest
 emsdk-master/emsdk activate latest
 
 source ./emsdk-master/emsdk_env.sh
+
+if [ -z "$EMSDK_NODE" ]; then
+  EMSDK_NODE=$(which node)
+fi
+
+if ! command -v emcmake > /dev/null 2>&1; then
+  PATH=`pwd`/build-em/emsdk-master/upstream/emscripten:$PATH
+fi
+
 emcmake cmake ..
 make -j
 
