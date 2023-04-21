@@ -49,6 +49,9 @@ fi
 if ! command -v emcmake > /dev/null 2>&1; then
   PATH=`pwd`/emsdk-master/upstream/emscripten:$PATH
   echo $PATH
+  pushd emsdk-master/upstream/emscripten
+  ls -l
+  popd
 fi
 
 emcmake cmake ..
