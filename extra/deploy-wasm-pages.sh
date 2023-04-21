@@ -26,6 +26,7 @@ if ! command -v cmake > /dev/null 2>&1; then
     ensure_command "wget"
     wget --quiet --show-progress -O cmake.tar.gz $url
   fi
+  mkdir cmake-source
   tar -xvf cmake.tar.gz -C cmake-source
   rm cmake.tar.gz
   PATH=`pwd`/cmake-source/bin:$PATH
