@@ -27,7 +27,7 @@ if ! command -v cmake > /dev/null 2>&1; then
     wget --quiet --show-progress -O cmake.tar.gz $url
   fi
   mkdir cmake-source
-  tar -xvf cmake.tar.gz -C cmake-source -q
+  tar -xvf cmake.tar.gz -C cmake-source
   rm cmake.tar.gz
   chmod +x cmake-source/bin/*
   PATH=`pwd`/cmake-source/bin:$PATH
@@ -48,7 +48,7 @@ if ! [ -d "emsdk-master" ]; then
     wget --quiet --show-progress -O master.tar.gz $url
   fi
   ensure_command "xz"
-  tar -xvf master.tar.gz -q
+  tar -xvf master.tar.gz -C emsdk-master
   rm master.tar.gz
 fi
 
