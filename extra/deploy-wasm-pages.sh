@@ -43,10 +43,12 @@ source ./emsdk-master/emsdk_env.sh
 
 if [ -z "$EMSDK_NODE" ]; then
   EMSDK_NODE=$(which node)
+  echo $EMSDK_NOD
 fi
 
 if ! command -v emcmake > /dev/null 2>&1; then
   PATH=`pwd`/build-em/emsdk-master/upstream/emscripten:$PATH
+  echo $PATH
 fi
 
 emcmake cmake ..
