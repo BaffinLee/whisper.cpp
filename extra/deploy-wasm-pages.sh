@@ -3,11 +3,11 @@
 ensure_command() {
   if ! command -v $1 > /dev/null 2>&1; then
     if command -v yum >/dev/null 2>&1; then
-      sudo yum update
-      sudo yum install -y $1
+      yum update
+      yum install -y $1
     elif command -v apt-get >/dev/null 2>&1; then
-      sudo apt-get update
-      sudo apt-get install -y $1
+      apt-get update
+      apt-get install -y $1
     elif command -v brew >/dev/null 2>&1; then
       brew update
       brew install $1
