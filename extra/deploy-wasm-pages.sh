@@ -30,7 +30,7 @@ if ! [ -d "emsdk-master" ]; then
     ensure_command "wget"
     wget --quiet --show-progress -O master.tar.gz $url
   fi
-  ensure_command "xz" "xz-utils"
+  ensure_command "xz"
   tar -xvf master.tar.gz
   rm master.tar.gz
 fi
@@ -49,9 +49,6 @@ fi
 if ! command -v emcmake > /dev/null 2>&1; then
   PATH=`pwd`/emsdk-master/upstream/emscripten:$PATH
   echo $PATH
-  pushd emsdk-master/upstream/emscripten
-  ls -l
-  popd
 fi
 
 emcmake cmake ..
