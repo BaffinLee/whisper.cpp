@@ -36,7 +36,7 @@ fi
 mkdir -p build-em/
 cd build-em/
 
-if ! [ -d "emsdk-master" ]; then
+if ! [ -d "emsdk-master" ] || ! [ -e "emsdk-master/emsdk_env.sh" ] || ! [ -e "emsdk-master/emsdk.py" ]; then
   url=https://github.com/emscripten-core/emsdk/archive/master.tar.gz
   if command -v wget >/dev/null 2>&1; then
     wget --quiet --show-progress -O master.tar.gz $url
@@ -51,25 +51,11 @@ if ! [ -d "emsdk-master" ]; then
   rm master.tar.gz
 fi
 
-cd emsdk-master
-ls
-cd ../
-
 emsdk-master/emsdk update
 emsdk-master/emsdk install latest
 emsdk-master/emsdk activate latest
 
 source ./emsdk-master/emsdk_env.sh
-
-if [ -z "$EMSDK_NODE" ]; then
-  EMSDK_NODE=$(which node)
-  echo $EMSDK_NODE
-fi
-
-if ! command -v emcmake > /dev/null 2>&1; then
-  PATH=`pwd`/emsdk-master/upstream/emscripten:$PATH
-  echo $PATH
-fi
 
 emcmake cmake ..
 make -j
