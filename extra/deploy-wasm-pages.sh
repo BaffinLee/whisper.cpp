@@ -51,6 +51,10 @@ if ! [ -d "emsdk-master" ]; then
   rm master.tar.gz
 fi
 
+cd emsdk-master
+ls
+cd ../
+
 emsdk-master/emsdk update
 emsdk-master/emsdk install latest
 emsdk-master/emsdk activate latest
