@@ -48,6 +48,7 @@ if ! [ -d "emsdk-master" ]; then
     wget --quiet --show-progress -O master.tar.gz $url
   fi
   ensure_command "xz"
+  mkdir emsdk-master
   tar -xvf master.tar.gz -C emsdk-master
   rm master.tar.gz
 fi
