@@ -1,18 +1,38 @@
 #!/bin/bash
 
-if ! command -v cmake &> /dev/null; then
-  if command -v yum >/dev/null 2>&1; then
-    yum install -y cmake
-  elif command -v apt-get >/dev/null 2>&1; then
-    apt-get install -y cmake
+ensure_command() {
+  if ! command -v $1 > /dev/null 2>&1; then
+    if command -v yum >/dev/null 2>&1; then
+      sudo yum update
+      sudo yum install -y $1
+    elif command -v apt-get >/dev/null 2>&1; then
+      sudo apt-get update
+      sudo apt-get install -y $1
+    elif command -v brew >/dev/null 2>&1; then
+      brew update
+      brew install $1
+    else
+      echo "Please install $1 manually"
+      exit 1
+    fi
   fi
-fi
+}
+
+ensure_command "cmake"
 
 mkdir -p build-em/
 cd build-em/
 
 if ! [ -d "emsdk-master" ]; then
-  wget -q https://github.com/emscripten-core/emsdk/archive/master.tar.gz
+  url=https://github.com/emscripten-core/emsdk/archive/master.tar.gz
+  if command -v wget >/dev/null 2>&1; then
+    wget --quiet --show-progress -O master.tar.gz $url
+  elif command -v curl >/dev/null 2>&1; then
+    curl -L --output master.tar.gz $url
+  else
+    ensure_command "wget"
+    wget --quiet --show-progress -O master.tar.gz $url
+  fi
   tar -xvf master.tar.gz
   rm master.tar.gz
 fi
