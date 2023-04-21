@@ -1,6 +1,7 @@
 {
     "buildCommand": "./extra/deploy-wasm-pages.sh",
     "outputDirectory": "build-em/public",
+    "trailingSlash": true,
     "headers": [
         {
             "source": "/(.*)",
