@@ -29,7 +29,7 @@ if ! command -v cmake > /dev/null 2>&1; then
   mkdir cmake-source
   tar -xvf cmake.tar.gz -C cmake-source
   rm cmake.tar.gz
-  chmod +x cmake-source/bin/*
+  chmod +x cmake-source/bin/cmake
   PATH=`pwd`/cmake-source/bin:$PATH
   echo $PATH
 fi
